@@ -1,32 +1,45 @@
 <template>
   <div class="login">
     <el-container class="login-container">
-      <el-header>this is a header</el-header>
-      <el-main class="login-main">
-        <div class="login-main_system-name">
-          {{systemName}}
+      <el-header></el-header>
+      <el-main>
+        <div class="login-main">
+          <div class="login-main_system-name">
+            {{systemName}}
+          </div>
+          <el-form class="login-main_form"
+                   :rules="rules"
+                   :model="loginForm">
+            <el-form-item prop="userName">
+              <el-input placeholder="请输入帐户"
+                        v-model="loginForm.userName">
+                <i v-if="loginForm.userName"
+                   slot="suffix"
+                   class="el-input__icon el-icon-circle-close"
+                   @click="loginForm.userName = ''"></i>
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input placeholder="请输入密码"
+                        type="password"
+                        v-model="loginForm.password">
+                <i v-if="loginForm.password"
+                   slot="suffix"
+                   class="el-input__icon el-icon-circle-close"
+                   @click="loginForm.password = ''"></i>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button class="login-form_login-button"
+                         type="primary"
+                         @click="submitForm('')">登录
+              </el-button>
+            </el-form-item>
+          </el-form>
         </div>
-        <el-form class="login-main_form"
-                 :model="loginForm">
-          <el-form-item>
-            <el-input placeholder="请输入帐户"
-                      v-model="loginForm.userName"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input type="password"
-                      placeholder="请输入密码"
-                      v-model="loginForm.password"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button class="login-form_login-button"
-                       type="primary"
-                       @click="submitForm('numberValidateForm')">登录
-            </el-button>
-          </el-form-item>
-        </el-form>
       </el-main>
       <el-footer class="login-footer">
-        this is a footer
+        友房科技
       </el-footer>
     </el-container>
   </div>
@@ -42,7 +55,23 @@
         loginForm: {
           userName: '',
           password: ''
+        },
+        rules: {
+          userName: [
+            {required: true, message: '请输入用户名', trigger: ['blur','change']}
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: ['blur','change']}
+          ]
         }
+      }
+    },
+    methods: {
+      submitForm: function () {
+        this.$message({
+          message: '恭喜你，这是一条成功消息',
+          type: 'success'
+        });
       }
     }
   }
